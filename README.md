@@ -1,2 +1,2 @@
 # Data-Processing-At-Scale-Project
- This project is based on SPARQ and Scala
+ This project is based on SPARKSql and Scala
