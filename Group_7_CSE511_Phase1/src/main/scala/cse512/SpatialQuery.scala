@@ -5,8 +5,18 @@ import org.apache.spark.sql.SparkSession
 object SpatialQuery extends App{
 
   def st_contains(rectangle: String, point: String): Boolean = {
-    val Array(rectx1, recty1, rectx2, recty2) = rectangle.split(",").map(x => x.toDouble);
-    val Array(pointx, pointy) = point.split(",").map(x => x.toDouble);
+    
+	val rectArray = rectangle.split(",");
+	val pointArray = point.split(",");
+	
+	val rectx1 = rectArray(0).toDouble;
+	val recty1 = rectArray(1).toDouble;
+	val rectx2 = rectArray(2).toDouble;
+	val recty2 = rectArray(3).toDouble;
+	
+	val pointx = pointArray(0).toDouble;
+	val pointy = pointArray(1).toDouble;
+	
     if(pointx >= rectx1 && pointx <= rectx2 && pointy >= recty1 && pointy <= recty2) {
       return true
     }
@@ -14,9 +24,17 @@ object SpatialQuery extends App{
   }
 
   def st_within(point1: String, point2: String, distance:Double): Boolean = {
-    val Array(point1x, point1y) = point1.split(",").map(x => x.toDouble);
-    val Array(point2x, point2y) = point2.split(",").map(x => x.toDouble);
-    val dist = math.sqrt(((point1x - point2x) * (point1x - point2x)) + ((point1y - point2y) * (point1y - point2y)));
+  
+	val point1Array = point1.split(",");
+	val point2Array = point2.split(",");
+	
+	val point1x = point1Array(0).toDouble;
+	val point1y = point1Array(1).toDouble;
+	
+	val point2x = point2Array(0).toDouble;
+	val point2y = point2Array(1).toDouble;
+    
+	val dist = math.sqrt(((point1x - point2x) * (point1x - point2x)) + ((point1y - point2y) * (point1y - point2y)));
     if(dist <= distance) {
       return true;
     }
