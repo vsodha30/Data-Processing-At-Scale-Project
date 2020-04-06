@@ -16,7 +16,7 @@ object SpatialQuery extends App{
   def st_within(point1: String, point2: String, distance:Double): Boolean = {
     val Array(point1x, point1y) = point1.split(",").map(x => x.toDouble);
     val Array(point2x, point2y) = point2.split(",").map(x => x.toDouble);
-    val dist = ((point1x - point2x) * (point1x - point2x)) + ((point1y - point2y) * (point1y - point2y));
+    val dist = math.sqrt(((point1x - point2x) * (point1x - point2x)) + ((point1y - point2y) * (point1y - point2y)));
     if(dist <= distance) {
       return true;
     }
