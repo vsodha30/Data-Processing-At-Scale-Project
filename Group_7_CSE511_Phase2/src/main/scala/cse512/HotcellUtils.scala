@@ -48,9 +48,12 @@ object HotcellUtils {
   }
 
   def isNeighbour (x1: Int, x2: Int, x3: Int, y1:Int, y2:Int, y3:Int): Boolean = {
-    if(x1 == y1 + 1 || x1 == y1 - 1) {
-      if(x2 == y2 + 1 || x2 == y2 - 1) {
-        if(x3 == y3 + 1 || x3 == y3 - 1) {
+    if(x1 == y1 && x2 == y2 && x3 == y3) {
+      return false;
+    }
+    if(x1 <= y1 + 1 && x1 >= y1 - 1) {
+      if(x2 <= y2 + 1 && x2 >= y2 - 1) {
+        if(x3 <= y3 + 1 && x3 >= y3 - 1) {
           return true;
         }
       }

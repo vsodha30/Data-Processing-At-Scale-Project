@@ -56,8 +56,8 @@ def runHotcellAnalysis(spark: SparkSession, pointPath: String): DataFrame =
   // YOU NEED TO CHANGE THIS PART
   val attrDF = pickupInfo.groupBy("x","y","z").count().as("aggr")
   attrDF.createOrReplaceTempView("attr_table")
-  val xmean = spark.sql("SELECT count(attr_table.count) FROM attr_table").first().getLong(0).toDouble / numCells
-  val s = math.sqrt((spark.sql("SELECT count(power(attr_table.count, 2)) FROM attr_table").first().getLong(0).toDouble / numCells) - (xmean * xmean))
+  val xmean = spark.sql("SELECT sum(attr_table.count) FROM attr_table").first().getLong(0).toDouble / numCells
+  val s = math.sqrt((spark.sql("SELECT sum(power(attr_table.count, 2)) FROM attr_table").first().getDouble(0).toDouble / numCells) - (xmean * xmean))
   attrDF.show()
 
   val neighboursDf = spark.sql("SELECT t1.x as x, t1.y as y, t1.z as z, t1.count as attr, t2.x as nx, t2.y as ny, t2.z as nz, t2.count as nattr FROM attr_table as t1, attr_table as t2 WHERE is_neighbour(t1.x, t1.y, t1.z, t2.x, t2.y, t2.z)")
